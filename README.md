@@ -1,2 +1,2 @@
-# pose_classfication
+# pose_classification
 Classify human pose in image
