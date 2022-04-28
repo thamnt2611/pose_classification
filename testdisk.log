@@ -1,0 +1,437 @@
+
+
+Tue Apr 12 15:40:01 2022
+Command line: TestDisk
+
+TestDisk 7.1, Data Recovery Utility, July 2019
+Christophe GRENIER <grenier@cgsecurity.org>
+https://www.cgsecurity.org
+OS: Linux, kernel 5.13.0-37-generic (#42~20.04.1-Ubuntu SMP Tue Mar 15 15:44:28 UTC 2022) x86_64
+Compiler: GCC 9.2
+ext2fs lib: 1.45.5, ntfs lib: libntfs-3g, reiserfs lib: none, ewf lib: none, curses lib: ncurses 6.1
+/dev/sda: LBA, HPA, LBA48, DCO support
+/dev/sda: size       488397168 sectors
+/dev/sda: user_max   488397168 sectors
+/dev/sda: native_max 488397168 sectors
+/dev/sdb: LBA, HPA, LBA48, DCO support
+/dev/sdb: size       1953525168 sectors
+/dev/sdb: user_max   1953525168 sectors
+/dev/sdb: native_max 1953525168 sectors
+Warning: can't get size for Disk /dev/mapper/control - 0 B - 0 sectors, sector size=512
+Warning: can't get size for Disk /dev/loop19 - 0 B - 0 sectors, sector size=512
+Hard disk list
+Disk /dev/sda - 250 GB / 232 GiB - CHS 30401 255 63, sector size=512 - Samsung SSD 860 EVO 250GB, S/N:S4CKNG0M866749E, FW:RVT03B6Q
+Disk /dev/sdb - 1000 GB / 931 GiB - CHS 121601 255 63, sector size=512 - Samsung SSD 860 EVO 1TB, S/N:S4FMNF0N104064X, FW:RVT04B6Q
+Disk /dev/loop0 - 58 MB / 55 MiB - 113680 sectors (RO), sector size=512
+Disk /dev/loop1 - 4096 B - 8 sectors (RO), sector size=512
+Disk /dev/loop10 - 45 MB / 43 MiB - 89352 sectors (RO), sector size=512
+Disk /dev/loop11 - 98 MB / 93 MiB - 191424 sectors (RO), sector size=512
+Disk /dev/loop12 - 259 MB / 247 MiB - 507712 sectors (RO), sector size=512
+Disk /dev/loop13 - 97 MB / 93 MiB - 190840 sectors (RO), sector size=512
+Disk /dev/loop14 - 68 MB / 65 MiB - 133552 sectors (RO), sector size=512
+Disk /dev/loop15 - 56 MB / 54 MiB - 111080 sectors (RO), sector size=512
+Disk /dev/loop16 - 310 MB / 295 MiB - 605624 sectors (RO), sector size=512
+Disk /dev/loop17 - 229 MB / 219 MiB - 448512 sectors (RO), sector size=512
+Disk /dev/loop18 - 46 MB / 44 MiB - 91416 sectors (RO), sector size=512
+Disk /dev/loop2 - 64 MB / 61 MiB - 126760 sectors (RO), sector size=512
+Disk /dev/loop3 - 64 MB / 61 MiB - 126760 sectors (RO), sector size=512
+Disk /dev/loop4 - 58 MB / 55 MiB - 113696 sectors (RO), sector size=512
+Disk /dev/loop5 - 229 MB / 219 MiB - 448512 sectors (RO), sector size=512
+Disk /dev/loop6 - 68 MB / 65 MiB - 133320 sectors (RO), sector size=512
+Disk /dev/loop7 - 273 MB / 260 MiB - 533936 sectors (RO), sector size=512
+Disk /dev/loop8 - 53 MB / 50 MiB - 104360 sectors (RO), sector size=512
+Disk /dev/loop9 - 260 MB / 248 MiB - 509456 sectors (RO), sector size=512
+
+Partition table type (auto): EFI GPT
+Disk /dev/sdb - 1000 GB / 931 GiB - Samsung SSD 860 EVO 1TB
+Partition table type: Intel
+
+Analyse Disk /dev/sdb - 1000 GB / 931 GiB - CHS 121601 255 63
+Geometry from i386 MBR: head=256 sector=63
+check_part_i386 1 type EE: no test
+Current partition structure:
+ 1 P EFI GPT                  0   0  2 121601  80 63 1953525167
+
+Warning: Bad ending head (CHS and LBA don't match)
+No partition is bootable
+
+search_part()
+Disk /dev/sdb - 1000 GB / 931 GiB - CHS 121601 255 63
+FAT32 at 0/32/33
+FAT1 : 6654-7422
+FAT2 : 7423-8191
+start_rootdir : 8192 root cluster : 2
+Data : 8192-204799
+sectors : 204800
+cluster_size : 2
+no_of_cluster : 98304 (2 - 98305)
+fat_length 769 calculated 769
+set_FAT_info: name from BS used
+
+FAT32 at 0/32/33
+FAT: cluster=2(0x2), pos=10240
+     FAT32                    0  32 33    12 223 19     204800 [EFI System Partition] [NO NAME]
+     FAT32, blocksize=1024, 104 MB / 100 MiB
+
+recover_EXT2: s_block_group_nr=0/1861, s_mnt_count=96/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+Last mount time:    Wed Mar 30 17:37:26 2022
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 249 GB / 232 GiB
+NTFS at 30394/72/15
+filesystem size           1465239552
+sectors_per_cluster       8
+mft_lcn                   4
+mftmirr_lcn               91577471
+clusters_per_mft_record   -10
+clusters_per_index_record 1
+     HPFS - NTFS          30394  72 15 121601  57 56 1465239552 [ANIME]
+     NTFS, blocksize=4096, 750 GB / 698 GiB
+
+Results
+   * FAT32                    0  32 33    12 223 19     204800 [EFI System Partition] [NO NAME]
+     FAT32, blocksize=1024, 104 MB / 100 MiB
+   P Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 249 GB / 232 GiB
+   P HPFS - NTFS          30394  72 15 121601  57 56 1465239552 [ANIME]
+     NTFS, blocksize=4096, 750 GB / 698 GiB
+
+Hint for advanced users: dmsetup may be used if you prefer to avoid rewriting the partition table for the moment:
+echo "0 204800 linear /dev/sdb 2048" | dmsetup create test0
+echo "0 488044544 linear /dev/sdb 239616" | dmsetup create test1
+echo "0 1465239552 linear /dev/sdb 488284160" | dmsetup create test2
+
+interface_write()
+ 1 * FAT32                    0  32 33    12 223 19     204800 [EFI System Partition] [NO NAME]
+ 2 P Linux                   14 233 28 30394  72 14  488044544
+ 3 P HPFS - NTFS          30394  72 15 121601  57 56 1465239552 [ANIME]
+
+search_part()
+Disk /dev/sdb - 1000 GB / 931 GiB - CHS 121601 255 63
+FAT32 at 0/32/33
+FAT1 : 6654-7422
+FAT2 : 7423-8191
+start_rootdir : 8192 root cluster : 2
+Data : 8192-204799
+sectors : 204800
+cluster_size : 2
+no_of_cluster : 98304 (2 - 98305)
+fat_length 769 calculated 769
+set_FAT_info: name from BS used
+
+FAT32 at 0/32/33
+FAT: cluster=2(0x2), pos=10240
+     FAT32                    0  32 33    12 223 19     204800 [EFI System Partition] [NO NAME]
+     FAT32, blocksize=1024, 104 MB / 100 MiB
+FAT32 at 0/32/39
+FAT1 : 6654-7422
+FAT2 : 7423-8191
+start_rootdir : 8192 root cluster : 2
+Data : 8192-204799
+sectors : 204800
+cluster_size : 2
+no_of_cluster : 98304 (2 - 98305)
+fat_length 769 calculated 769
+FAT differs, FAT sectors=752-768/769
+set_FAT_info: name from BS used
+
+FAT32 at 0/32/39
+FAT: cluster=2(0x2), pos=10240
+     FAT32                    0  32 33    12 223 19     204800 [EFI System Partition] [NO NAME]
+     FAT32, blocksize=1024, 104 MB / 100 MiB
+
+recover_EXT2: s_block_group_nr=0/1861, s_mnt_count=96/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+Last mount time:    Wed Mar 30 17:37:26 2022
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 249 GB / 232 GiB
+
+block_group_nr 1
+
+recover_EXT2: "e2fsck -b 32768 -B 4096 device" may be needed
+recover_EXT2: s_block_group_nr=1/1861, s_mnt_count=0/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Backup_SB, 249 GB / 232 GiB
+     Linux Swap              32  64 33   293  85 32    4194288
+     SWAP2 version 1, pagesize=4096, 2147 MB / 2047 MiB
+
+block_group_nr 3
+
+recover_EXT2: "e2fsck -b 98304 -B 4096 device" may be needed
+recover_EXT2: s_block_group_nr=3/1861, s_mnt_count=0/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Backup_SB, 249 GB / 232 GiB
+
+block_group_nr 5
+
+recover_EXT2: "e2fsck -b 163840 -B 4096 device" may be needed
+recover_EXT2: s_block_group_nr=5/1861, s_mnt_count=0/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Backup_SB, 249 GB / 232 GiB
+
+block_group_nr 7
+
+recover_EXT2: "e2fsck -b 229376 -B 4096 device" may be needed
+recover_EXT2: s_block_group_nr=7/1861, s_mnt_count=0/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Backup_SB, 249 GB / 232 GiB
+
+block_group_nr 9
+
+recover_EXT2: "e2fsck -b 294912 -B 4096 device" may be needed
+recover_EXT2: s_block_group_nr=9/1861, s_mnt_count=0/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Backup_SB, 249 GB / 232 GiB
+
+block_group_nr 25
+
+recover_EXT2: "e2fsck -b 819200 -B 4096 device" may be needed
+recover_EXT2: s_block_group_nr=25/1861, s_mnt_count=0/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Backup_SB, 249 GB / 232 GiB
+
+block_group_nr 27
+
+recover_EXT2: "e2fsck -b 884736 -B 4096 device" may be needed
+recover_EXT2: s_block_group_nr=27/1861, s_mnt_count=0/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Backup_SB, 249 GB / 232 GiB
+
+block_group_nr 49
+
+recover_EXT2: "e2fsck -b 1605632 -B 4096 device" may be needed
+recover_EXT2: s_block_group_nr=49/1861, s_mnt_count=0/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Backup_SB, 249 GB / 232 GiB
+
+block_group_nr 81
+
+recover_EXT2: "e2fsck -b 2654208 -B 4096 device" may be needed
+recover_EXT2: s_block_group_nr=81/1861, s_mnt_count=0/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Backup_SB, 249 GB / 232 GiB
+
+block_group_nr 125
+
+recover_EXT2: "e2fsck -b 4096000 -B 4096 device" may be needed
+recover_EXT2: s_block_group_nr=125/1861, s_mnt_count=0/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Backup_SB, 249 GB / 232 GiB
+     Linux Swap            3459 252 58  5287 146 27   29360112
+     SWAP2 version 1, pagesize=4096, 15 GB / 13 GiB
+
+block_group_nr 243
+
+recover_EXT2: "e2fsck -b 7962624 -B 4096 device" may be needed
+recover_EXT2: s_block_group_nr=243/1861, s_mnt_count=0/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Backup_SB, 249 GB / 232 GiB
+
+block_group_nr 343
+
+recover_EXT2: "e2fsck -b 11239424 -B 4096 device" may be needed
+recover_EXT2: s_block_group_nr=343/1861, s_mnt_count=0/4294967295, s_blocks_per_group=32768, s_inodes_per_group=8192
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 61005568
+recover_EXT2: part_size 488044544
+Filesystem created: Thu Aug 26 21:59:22 2021
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Backup_SB, 249 GB / 232 GiB
+NTFS at 30394/72/15
+filesystem size           1465239552
+sectors_per_cluster       8
+mft_lcn                   4
+mftmirr_lcn               91577471
+clusters_per_mft_record   -10
+clusters_per_index_record 1
+     HPFS - NTFS          30394  72 15 121601  57 56 1465239552 [ANIME]
+     NTFS, blocksize=4096, 750 GB / 698 GiB
+NTFS at 121601/57/56
+filesystem size           1465239552
+sectors_per_cluster       8
+mft_lcn                   4
+mftmirr_lcn               91577471
+clusters_per_mft_record   -10
+clusters_per_index_record 1
+     HPFS - NTFS          30394  72 15 121601  57 56 1465239552 [ANIME]
+     NTFS found using backup sector, blocksize=4096, 750 GB / 698 GiB
+NTFS at 121601/57/56
+filesystem size           1465239552
+sectors_per_cluster       8
+mft_lcn                   4
+mftmirr_lcn               91577471
+clusters_per_mft_record   -10
+clusters_per_index_record 1
+     HPFS - NTFS          121601  57 56 212808  43 34 1465239552
+     NTFS, blocksize=4096, 750 GB / 698 GiB
+This partition ends after the disk limits. (start=1953523711, size=1465239552, end=3418763262, disk end=1953525168)
+Search for partition aborted
+Disk /dev/sdb - 1000 GB / 931 GiB - CHS 121601 255 63
+Check the harddisk size: HD jumper settings, BIOS detection...
+The harddisk (1000 GB / 931 GiB) seems too small! (< 1750 GB / 1630 GiB)
+The following partition can't be recovered:
+     HPFS - NTFS          121601  57 56 212808  43 34 1465239552
+     NTFS, blocksize=4096, 750 GB / 698 GiB
+
+Results
+   * FAT32                    0  32 33    12 223 19     204800 [EFI System Partition] [NO NAME]
+     FAT32, blocksize=1024, 104 MB / 100 MiB
+     Linux                   14 233 28 30394  72 14  488044544
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 249 GB / 232 GiB
+     Linux Swap              32  64 33   293  85 48    4194304
+     SWAP2 version 1, pagesize=4096, 2147 MB / 2048 MiB
+     Linux Swap            3459 252 58  5287 146 43   29360128
+     SWAP2 version 1, pagesize=4096, 15 GB / 14 GiB
+   P HPFS - NTFS          30394  72 15 121601  57 56 1465239552 [ANIME]
+     NTFS, blocksize=4096, 750 GB / 698 GiB
+
+Hint for advanced users: dmsetup may be used if you prefer to avoid rewriting the partition table for the moment:
+echo "0 204800 linear /dev/sdb 2048" | dmsetup create test0
+echo "0 488044544 linear /dev/sdb 239616" | dmsetup create test1
+echo "0 4194304 linear /dev/sdb 518144" | dmsetup create test2
+echo "0 29360128 linear /dev/sdb 55584768" | dmsetup create test3
+echo "0 1465239552 linear /dev/sdb 488284160" | dmsetup create test4
+
+interface_write()
+ 1 * FAT32                    0  32 33    12 223 19     204800 [EFI System Partition] [NO NAME]
+ 2 P HPFS - NTFS          30394  72 15 121601  57 56 1465239552 [ANIME]
+
+interface_write()
+ 1 P FAT32                    0  32 33    12 223 19     204800 [EFI System Partition] [NO NAME]
+ 2 * Linux Swap              32  64 33   293  85 48    4194304
+ 3 P HPFS - NTFS          30394  72 15 121601  57 56 1465239552 [ANIME]
+
+interface_write()
+ 1 P FAT32                    0  32 33    12 223 19     204800 [EFI System Partition] [NO NAME]
+ 2 * Linux Swap              32  64 33   293  85 48    4194304
+ 3 P HPFS - NTFS          30394  72 15 121601  57 56 1465239552 [ANIME]
+
+interface_write()
+ 1 P FAT32                    0  32 33    12 223 19     204800 [EFI System Partition] [NO NAME]
+ 2 * Linux Swap              32  64 33   293  85 48    4194304
+ 3 P HPFS - NTFS          30394  72 15 121601  57 56 1465239552 [ANIME]
+simulate write!
+
+write_mbr_i386: starting...
+write_all_log_i386: starting...
+No extended partition
+
+Interface Advanced
+Geometry from i386 MBR: head=256 sector=63
+check_part_i386 1 type EE: no test
+ 1 P EFI GPT                  0   0  2 121601  80 63 1953525167
+
+Interface Advanced
+Geometry from i386 MBR: head=256 sector=63
+check_part_i386 1 type EE: no test
+ 1 P EFI GPT                  0   0  2 121601  80 63 1953525167
+Partition table type (auto): EFI GPT
+Disk /dev/sda - 250 GB / 232 GiB - Samsung SSD 860 EVO 250GB
+Partition table type: Intel
+
+Interface Advanced
+Geometry from i386 MBR: head=255 sector=63
+check_part_i386 1 type EE: no test
+ 1 P EFI GPT                  0   0  2 267349  89  4 4294967295
+SIGHUP detected! TestDisk has been killed.
+s date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+ERROR: Couldn't set the file's date and time for inode_3104067
+SIGHUP detected! TestDisk has been killed.

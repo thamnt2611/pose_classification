@@ -1,0 +1,14 @@
+# Ignore
+inputs/
+model/
+pe-venv/
+pose_estimation/
+FastPose.jit
+libdarknet.so
+result.json
+
+# Except
+!pose_estimation/pose_estimator.py
+!pose_estimation/simple_transform.py
+
+
