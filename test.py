@@ -12,6 +12,5 @@ ANM = ClassTracker("Animal")
 class Dog(object):
     pass
 
-
 if __name__ == "__main__":
     print(ANM.class_dict)

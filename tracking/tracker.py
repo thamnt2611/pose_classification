@@ -70,7 +70,7 @@ class Tracker(object):
                 if(min_dists[i] < max_dist_thres and track_objects[i] is not None):
                     cur_object_infos[i].track_id = track_objects[i].track_id
                     z_n = self._measure_velocity(min_dists[i], cur_object_infos[i].frame_id - track_objects[i].frame_id)
-                    # update velocity every 5 frame
+                    # update velocity every 5 frames
                     if (cur_object_infos[i].frame_id % self.tracking_period == 0):
                         # print("Update ", cur_object_infos[i].frame_id)
                         if(track_objects[i].velocity == 0.0): # compare float number (?)

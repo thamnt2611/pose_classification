@@ -7,6 +7,7 @@ class ObjectData(object):
         self.confidence = 0.0 # float
         self.class_id = -1 
         self.frame_id = 0
+        self.pose_name = ""
 
 class FrameData(object):
     def __init__(self):

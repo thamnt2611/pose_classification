@@ -30,8 +30,7 @@ class PoseEstimator(object):
             resized_boxes[i] = torch.FloatTensor(n_box)
         return (inps, resized_boxes)
 
-    def predict(self, orig_img, detection_result):
-        boxes, confidences, classIDs = detection_result['boxes'], detection_result['confidences'], detection_result['classIDs']
+    def predict(self, orig_img, boxes, confidences, classIDs):
         inps, resized_boxes = self._preprocess(orig_img, boxes, confidences, classIDs)
         hms = []
         for j in range(len(inps)):
@@ -43,30 +42,30 @@ class PoseEstimator(object):
             return None
         hms = torch.cat(hms)
         hms = hms.cpu()
-        preds_coords, preds_scores = self._postprocess(hms, resized_boxes, self.custom_trans_matrix)
-        result = {
-            'pose_coords': preds_coords, # pose_num x kp_num x 2
-            'kp_scores' : preds_scores, # pose_num x kp_num x 1
-            'proposal_score' : torch.mean(preds_scores, 1) + confidences + 1.25 * torch.max(preds_scores, 1),
-        }
-        return result
-        # n_image = cv2.warpPerspective(orig_img, self.custom_trans_matrix, (orig_img.shape[1], orig_img.shape[0]), flags=cv2.INTER_LINEAR)
-        # _result = []
-        # for k in range(hms.shape[0]):
-        #     _result.append(
-        #         {
-        #             'keypoints':preds_coords[k],
-        #             'kp_score':preds_scores[k],
-        #             'proposal_score': torch.mean(preds_scores[k]) + confidences[k] + 1.25 * max(preds_scores[k]),
-        #             'box':[boxes[k][0], boxes[k][1], boxes[k][2]-boxes[k][0],boxes[k][3]-boxes[k][1]] 
-        #         }
-        #     )
+        preds_coords, preds_scores = self._postprocess(hms, resized_boxes)
         # result = {
-        #     'result': _result,
-        #     'image': n_image 
+        #     'pose_coords': preds_coords, # pose_num x kp_num x 2
+        #     'kp_scores' : preds_scores, # pose_num x kp_num x 1
+        #     'proposal_score' : torch.mean(preds_scores, 1) + confidences + 1.25 * torch.max(preds_scores, 1), # TODO: error (tensor + list)
         # }
-        # self._write_result_to_json(result)
-        # return result
+        # n_image = cv2.warpPerspective(orig_img, self.custom_trans_matrix, (orig_img.shape[1], orig_img.shape[0]), flags=cv2.INTER_LINEAR)
+        _result = []
+        for k in range(hms.shape[0]):
+            print(torch.mean(preds_scores[k]), confidences[k], max(preds_scores[k]))
+            _result.append(
+                {
+                    'keypoints':preds_coords[k],
+                    'kp_score':preds_scores[k],
+                    'proposal_score': torch.mean(preds_scores[k]) + confidences[k] + 1.25 * max(preds_scores[k]),
+                    'box':[boxes[k][0], boxes[k][1], boxes[k][2]-boxes[k][0],boxes[k][3]-boxes[k][1]] 
+                }
+            )
+        result = {
+            'result': _result,
+            'image': orig_img 
+        }
+        self._write_result_to_json(result)
+        return result
 
     def _write_result_to_json(self, im_res):
         json_results = []
@@ -92,13 +91,14 @@ class PoseEstimator(object):
         # return json_results
         
         
-    def _postprocess(self, hms, boxes, custom_trans_matrix):
+    def _postprocess(self, hms, boxes):
         pose_coords = []
         pose_scores = []
         for i in range(hms.shape[0]):
             pred, score = heatmap_to_coord_simple(hms[i], boxes[i])
-            for j in range(len(pred)):
-                pred[j] = perspective_transform(pred[j], self.custom_trans_matrix)
+            if self.custom_trans_matrix is not None:
+                for j in range(len(pred)):
+                    pred[j] = perspective_transform(pred[j], self.custom_trans_matrix)
             # import pdb; pdb.set_trace()
             pose_coords.append(torch.from_numpy(pred).unsqueeze(0))
             pose_scores.append(torch.from_numpy(score).unsqueeze(0))

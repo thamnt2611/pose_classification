@@ -6,6 +6,8 @@ pose_estimation/
 FastPose.jit
 libdarknet.so
 result.json
+classification/data/
+classification/weight/
 
 # Except
 !pose_estimation/pose_estimator.py
