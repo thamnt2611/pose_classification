@@ -84,8 +84,7 @@ void test_transformation(const cv::Mat& img,
                         .permute({0, 3, 1, 2})
                         .cuda();
     // tại sao center của bbox ko đổi ?
-    n_bbox.x = bbox.x;
-    n_bbox.y = bbox.y;
+    n_bbox = bbox;
     n_bbox.w = w * scale_mult;
     n_bbox.h = h * scale_mult;
 }
@@ -138,15 +137,15 @@ void fine_tune_kp(const at::Tensor& heatmap,
                 at::Tensor& kp_coords){
     int hm_height = heatmap.sizes()[1];
     int hm_width = heatmap.sizes()[2];
-    std::cout << heatmap.sizes() << std::endl;
+    // std::cout << heatmap.sizes() << std::endl;
     auto accessor = kp_coords.accessor<float, 2>();
     for (int i = 0; i < kp_coords.sizes()[0]; i++){
         int kp_x = kp_coords[i][0].item().to<int>(); int kp_y = kp_coords[i][1].item().to<int>();
         // int hm_value = heatmap[i][kp_x][kp_y].item();
         if ((kp_x > 1) && (kp_x < hm_width - 1) && (kp_y > 1) && (kp_y < hm_height - 1)){
-            std::cout << heatmap[i].sizes() << std::endl;
-            std::cout << heatmap[i][kp_y].sizes() << std::endl;
-            std::cout << heatmap[i][kp_y][kp_x + 1] << std::endl;
+            // std::cout << heatmap[i].sizes() << std::endl;
+            // std::cout << heatmap[i][kp_y].sizes() << std::endl;
+            // std::cout << heatmap[i][kp_y][kp_x + 1] << std::endl;
             float x_right = heatmap[i][kp_y][kp_x + 1].item<float>();
             float x_left = heatmap[i][kp_y][kp_x - 1].item<float>();
             if (x_right > x_left){
@@ -174,12 +173,8 @@ void heatmap_to_keypoints(const at::Tensor& heatmap,
     // at::Tensor tmp_coords = torch::empty({num_joints, 2});
 
     get_max_pred(heatmap, kp_coords, kp_scores);
-    std::cout << "GET MAX PRED RES\n";
-    std::cout << kp_coords << std::endl;
 
     fine_tune_kp(heatmap, kp_coords);
-    std::cout << "FINE TUNE RES\n";
-    std::cout << kp_coords << std::endl;
 
     scale_t scale {box.w, box.h};
     point_t center {box.x, box.y};
@@ -199,3 +194,5 @@ void heatmap_to_keypoints(const at::Tensor& heatmap,
 void tensor_to_mat(const at::Tensor& tensor, cv::Mat& mat){
     std::memcpy((void*) mat.data, tensor.data_ptr(), sizeof(torch::kU8)*tensor.numel()); // sua lai kieu du lieu
 }
+
+

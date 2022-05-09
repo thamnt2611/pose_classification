@@ -7,6 +7,11 @@ typedef struct{
     int h;
 }scale_t;
 
+typedef struct{
+    float scaleX;
+    float scaleY;
+}scale_factor_t;
+
 typedef struct kp_t{
     int x {};
     int y {};

@@ -27,18 +27,16 @@ void PoseEstimator::_preprocess(const cv::Mat& orig_img,
     for(int i = 0; i < boxes.size(); i++){
         scale_t target_scale{INPUT_W, INPUT_H};
         bbox_t& box = n_boxes[i];
-        // std:: cout << "Origin img " << orig_img << std:: endl;
-        test_transformation(rgbMat, boxes[i], inps[i], box, target_scale, 1.25);
-        // std:: cout << "Input tensor " << inps[i] << std:: endl;
+        test_transformation(rgbMat, boxes[i], inps[i], box, target_scale, 1);
     }
 }
+
+
 
 //TODO: sua mat -> tensor
 void PoseEstimator::_post_process(const at::Tensor& heatmap,
                         const vector<bbox_t>& boxes,
                         vector<pose_t>& poses){
-    std::cout << "Heatmap 1" << std::endl;
-    std::cout << heatmap[0] << std::endl;
     int num_joints = heatmap.sizes()[1];
     for (int obj_idx = 0; obj_idx < boxes.size(); obj_idx++){
         at::Tensor kp_coords = torch::empty({num_joints, 2});
@@ -68,10 +66,7 @@ void PoseEstimator::predict(const cv::Mat& orig_img,
     for (int i = 0; i < inps.size(); i++){
         std::vector<torch::jit::IValue> input_batch;
         input_batch.push_back(inps[i]);
-        // std::cout << "INPUT" << std::endl;
-        // std::cout << inps[i] << std::endl;
         hms[i] = model.forward(input_batch).toTensor();
-        // std::cout << hms[i] << std::endl;
     }
     at::Tensor heatmap = torch::cat(hms);
     _post_process(heatmap, n_boxes, preds);
