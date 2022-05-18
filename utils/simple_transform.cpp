@@ -137,15 +137,10 @@ void fine_tune_kp(const at::Tensor& heatmap,
                 at::Tensor& kp_coords){
     int hm_height = heatmap.sizes()[1];
     int hm_width = heatmap.sizes()[2];
-    // std::cout << heatmap.sizes() << std::endl;
     auto accessor = kp_coords.accessor<float, 2>();
     for (int i = 0; i < kp_coords.sizes()[0]; i++){
         int kp_x = kp_coords[i][0].item().to<int>(); int kp_y = kp_coords[i][1].item().to<int>();
-        // int hm_value = heatmap[i][kp_x][kp_y].item();
         if ((kp_x > 1) && (kp_x < hm_width - 1) && (kp_y > 1) && (kp_y < hm_height - 1)){
-            // std::cout << heatmap[i].sizes() << std::endl;
-            // std::cout << heatmap[i][kp_y].sizes() << std::endl;
-            // std::cout << heatmap[i][kp_y][kp_x + 1] << std::endl;
             float x_right = heatmap[i][kp_y][kp_x + 1].item<float>();
             float x_left = heatmap[i][kp_y][kp_x - 1].item<float>();
             if (x_right > x_left){
@@ -170,7 +165,6 @@ void heatmap_to_keypoints(const at::Tensor& heatmap,
                     at::Tensor& kp_coords, // shape : numjoints * 2
                     at::Tensor& kp_scores){
     int num_joints = heatmap.sizes()[0];
-    // at::Tensor tmp_coords = torch::empty({num_joints, 2});
 
     get_max_pred(heatmap, kp_coords, kp_scores);
 
@@ -183,8 +177,7 @@ void heatmap_to_keypoints(const at::Tensor& heatmap,
     for (int i = 0; i < num_joints; i++){
         point_t src_point {kp_coords[i][0].item().to<float>(), kp_coords[i][1].item().to<float>()};
         point_t dst_point;
-        transform_keypoint(src_point, dst_point, heatmap_scale,
-                    center, scale);
+        transform_keypoint(src_point, dst_point, heatmap_scale, center, scale);
         accessor[i][0] = dst_point.x;
         accessor[i][1] = dst_point.y;
     }
@@ -194,5 +187,3 @@ void heatmap_to_keypoints(const at::Tensor& heatmap,
 void tensor_to_mat(const at::Tensor& tensor, cv::Mat& mat){
     std::memcpy((void*) mat.data, tensor.data_ptr(), sizeof(torch::kU8)*tensor.numel()); // sua lai kieu du lieu
 }
-
-

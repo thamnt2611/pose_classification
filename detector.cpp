@@ -61,7 +61,6 @@ std::vector<bbox_t> HumanDetector::detect(char* image_path){
 }  
 
 std::vector<bbox_t> HumanDetector::detect(image darknet_image, scale_t target_scale){
-    std::cout << "frame num: " << frame_num++ << std::endl;
     float *prediction = network_predict_image(net, darknet_image);
     int nboxes = 0;
     int letterbox = 0;
@@ -71,8 +70,7 @@ std::vector<bbox_t> HumanDetector::detect(image darknet_image, scale_t target_sc
     std::vector<bbox_t> res_boxes;
     scale_factor_t scale_factor {target_scale.w*1.0 / get_input_width(), target_scale.h*1.0 / get_input_height()};
     scale_bbox(res_boxes, boxes, scale_factor);
-    update_boxes_track_id(res_boxes, 5, 50);
-    std::cout << "max track id: " << max_track_id << std::endl;
+    // update_boxes_track_id(res_boxes, 5, 50);
     return res_boxes;
 }
 
@@ -94,7 +92,6 @@ void HumanDetector::scale_bbox(std::vector<bbox_t>& n_boxes, const std::vector<b
         bbox.z_3d = b.y_3d;
         n_boxes.push_back(bbox);
     }
-    // std::cout << "scale_bbox: " << n_boxes.size() << std::endl;
 }
 
 std::vector<bbox_t> HumanDetector::get_bbox(detection* dets, int nboxes){
@@ -119,7 +116,6 @@ std::vector<bbox_t> HumanDetector::get_bbox(detection* dets, int nboxes){
             res.push_back(bbox);
         }
     }
-    // std::cout << "get_bbox: " << res.size() << std::endl;
     return res;
 }
 
@@ -141,66 +137,65 @@ void HumanDetector::_load_labels(char* label_file){
 }
 
 int HumanDetector::get_then_update_max_track_id(){
-    // std::cout << "MAX TRACK ID: " << max_track_id << std::endl;
     return max_track_id++;
 }
 
-void HumanDetector::update_boxes_track_id(std::vector<bbox_t>& cur_boxes, int frame_story, int max_dist){
-    // std::cout << "Num boxes: " << cur_boxes.size() << std::endl;
-    // std::cout << "Num in queue: " << prev_bboxes_deque.size() << std::endl;
-    // std::cout << "Cur_box id: " << std::endl;
-    if (cur_boxes.size() == 0){
-        prev_bboxes_deque.push_front(cur_boxes);
-        if(prev_bboxes_deque.size() > frame_story){
-            prev_bboxes_deque.pop_back();
-        }
-        return;
-    }
+// void HumanDetector::update_boxes_track_id(std::vector<bbox_t>& cur_boxes, int frame_story, int max_dist){
+//     // std::cout << "Num boxes: " << cur_boxes.size() << std::endl;
+//     // std::cout << "Num in queue: " << prev_bboxes_deque.size() << std::endl;
+//     // std::cout << "Cur_box id: " << std::endl;
+//     if (cur_boxes.size() == 0){
+//         prev_bboxes_deque.push_front(cur_boxes);
+//         if(prev_bboxes_deque.size() > frame_story){
+//             prev_bboxes_deque.pop_back();
+//         }
+//         return;
+//     }
 
-    bool has_prev_boxes = false;
-    for (auto boxes : prev_bboxes_deque){
-        if (boxes.size() != 0){
-            has_prev_boxes = true;
-            break;
-        }
-    }
+//     bool has_prev_boxes = false;
+//     for (auto boxes : prev_bboxes_deque){
+//         if (boxes.size() != 0){
+//             has_prev_boxes = true;
+//             break;
+//         }
+//     }
 
-    if (!has_prev_boxes){
-        // NOTE: code ntn thi co thay doi duoc khong?
-        for (auto& box : cur_boxes){
-            box.track_id = get_then_update_max_track_id();
-            // std::cout << "NEW: " << box.track_id << std::endl;
-        }
-    } else{
-        std::vector<int> min_box_dist (cur_boxes.size(), INT_MAX);
-        std::vector<int> tmp_id (cur_boxes.size(), 0);
-        for (auto &boxes : prev_bboxes_deque){
-            for (auto &prev_box : boxes){
-                for(int i = 0; i < cur_boxes.size(); i++){
-                    int dist = sqrt((prev_box.x - cur_boxes[i].x) * (prev_box.x - cur_boxes[i].x)
-                                        + (prev_box.y - cur_boxes[i].y) * (prev_box.y - cur_boxes[i].y));
-                    // std::cout << "DIST: " << dist << std::endl;
-                    if (dist < min_box_dist[i]){
-                        tmp_id[i] = prev_box.track_id;
-                        min_box_dist[i] = dist;
-                    }
-                }
-            }
-        }
+//     if (!has_prev_boxes){
+//         // NOTE: code ntn thi co thay doi duoc khong?
+//         for (auto& box : cur_boxes){
+//             box.track_id = get_then_update_max_track_id();
+//             // std::cout << "NEW: " << box.track_id << std::endl;
+//         }
+//     } else{
+//         std::vector<int> min_box_dist (cur_boxes.size(), INT_MAX);
+//         std::vector<int> tmp_id (cur_boxes.size(), 0);
+//         for (auto &boxes : prev_bboxes_deque){
+//             for (auto &prev_box : boxes){
+//                 for(int i = 0; i < cur_boxes.size(); i++){
+//                     int dist = sqrt((prev_box.x - cur_boxes[i].x) * (prev_box.x - cur_boxes[i].x)
+//                                         + (prev_box.y - cur_boxes[i].y) * (prev_box.y - cur_boxes[i].y));
+//                     // std::cout << "DIST: " << dist << std::endl;
+//                     if (dist < min_box_dist[i]){
+//                         tmp_id[i] = prev_box.track_id;
+//                         min_box_dist[i] = dist;
+//                     }
+//                 }
+//             }
+//         }
 
-        for(int i = 0; i < cur_boxes.size(); i++){
-            if(min_box_dist[i] < max_dist){
-                cur_boxes[i].track_id = tmp_id[i];
-                // std::cout << "TRACKING: " << i << " " << cur_boxes[i].track_id << std::endl;
-            }
-            else{
-                cur_boxes[i].track_id = get_then_update_max_track_id();
-                // std::cout << "NEW: " << i << " " << cur_boxes[i].track_id << std::endl;
-            }
-        }
-    }
-    prev_bboxes_deque.push_front(cur_boxes);
-    if(prev_bboxes_deque.size() > frame_story){
-        prev_bboxes_deque.pop_back();
-    }
-}
+//         for(int i = 0; i < cur_boxes.size(); i++){
+//             if(min_box_dist[i] < max_dist){
+//                 cur_boxes[i].track_id = tmp_id[i];
+//                 // std::cout << "TRACKING: " << i << " " << cur_boxes[i].track_id << std::endl;
+//             }
+//             else{
+//                 cur_boxes[i].track_id = get_then_update_max_track_id();
+//                 // std::cout << "NEW: " << i << " " << cur_boxes[i].track_id << std::endl;
+//             }
+//         }
+//     }
+//     prev_bboxes_deque.push_front(cur_boxes);
+//     if(prev_bboxes_deque.size() > frame_story){
+//         prev_bboxes_deque.pop_back();
+//     }
+// }

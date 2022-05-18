@@ -14,12 +14,12 @@ class PoseEstimator{
 
     public:
     // THAY DOI O DAY
-        int NUM_JOINTS {26};
+        int num_joints;
         int INPUT_W {192};
         int INPUT_H {256};
         int HEATMAP_W {48};
         int HEATMAP_H {64};
-        PoseEstimator(const char* model_path);
+        PoseEstimator(const char* model_path, int m_num_joints);
         void _load_model(const char* model_path);
         void _preprocess(const cv::Mat& orig_img, 
                         const vector<bbox_t>& boxes, 

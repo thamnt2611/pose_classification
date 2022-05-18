@@ -1,1 +1,0 @@
-int max_index(float* arr, int num);

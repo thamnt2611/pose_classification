@@ -27,7 +27,6 @@ class HumanDetector
         image _preprocess_input(image orig_image);
         image _load_detector_image(char* image_path);
         std::vector<bbox_t> get_bbox(detection* dets, int nboxes);
-        // void HumanDetector::scale_bbox(std::vector<bbox_t>& n_boxes, const std::vector<bbox_t>& o_boxes, scale_factor_t& scale_factor)
         void scale_bbox(std::vector<bbox_t>& n_boxes, const std::vector<bbox_t>& o_boxes, scale_factor_t& scale_factor);
         int get_input_width() const;
         int get_input_height() const;
