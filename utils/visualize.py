@@ -1,3 +1,5 @@
+"""Borrowed from AlphaPose code"""
+
 import cv2
 import torch
 
@@ -18,7 +20,7 @@ def get_color_fast(idx):
     return color
 
 
-def vis_frame_simple(im_res, kp_num = 17):
+def vis_frame_simple(im_res, kp_num = 17, format='coco'):
     frame = im_res['image']
     if len(im_res['result']) > 0:
         kp_num = len(im_res['result'][0]['keypoints'])

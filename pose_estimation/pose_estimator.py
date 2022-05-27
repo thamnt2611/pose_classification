@@ -8,22 +8,26 @@ import json
 import cv2
 
 class PoseEstimator(object):
-    def __init__(self, config_path, weight_path, custom_trans_matrix=None):
+    """
+        Using AlphaPose models: https://github.com/MVIG-SJTU/AlphaPose/blob/master/docs/MODEL_ZOO.md#model-zoo
+        In preprocessing phase, use simple transformation of AlphaPose
+    """
+    def __init__(self,weight_path, config_path, custom_trans_matrix=None):
         cfg = self._load_config(config_path)
         self.model = builder.build_sppe(cfg.MODEL, preset_cfg = cfg.DATA_PRESET)
         self.model.load_state_dict(torch.load(weight_path, map_location=torch.device("cuda:0"))) 
         self.model.eval()
-        x = torch.rand((1, 3, 256, 192))
-        traced_model = torch.jit.trace(self.model, x)
-        traced_model.save("./FastPose.jit")
-        # self.dataset_format = builder.retrieve_dataset(cfg.DATASET.TRAIN) # tra ve class dai dien cho tap dl do
-        self._input_size = cfg.DATA_PRESET.IMAGE_SIZE
+        # x = torch.rand((1, 3, 256, 192))
+        # traced_model = torch.jit.trace(self.model, x)
+        # traced_model.save("./FastPose.jit")
+        # # self.dataset_format = builder.retrieve_dataset(cfg.DATASET.TRAIN) # tra ve class dai dien cho tap dl do
+        self.INPUT_SIZE = cfg.DATA_PRESET.IMAGE_SIZE
         self.NUM_JOINTS = cfg.DATA_PRESET.NUM_JOINTS
-        self.transform = SimpleTransform(self._input_size)
+        self.transform = SimpleTransform(self.INPUT_SIZE)
         self.custom_trans_matrix = custom_trans_matrix
 
     def _preprocess(self, orig_img, boxes, confidences, classIDs):
-        inps = torch.zeros(boxes.shape[0], 3, *self._input_size)
+        inps = torch.zeros(boxes.shape[0], 3, *self.INPUT_SIZE)
         resized_boxes = torch.zeros(boxes.shape[0], 4)
         for i, box in enumerate(boxes):
             inps[i], n_box = self.transform.test_transformation(orig_img, box)
@@ -51,7 +55,7 @@ class PoseEstimator(object):
         # n_image = cv2.warpPerspective(orig_img, self.custom_trans_matrix, (orig_img.shape[1], orig_img.shape[0]), flags=cv2.INTER_LINEAR)
         _result = []
         for k in range(hms.shape[0]):
-            print(torch.mean(preds_scores[k]), confidences[k], max(preds_scores[k]))
+            # print(torch.mean(preds_scores[k]), confidences[k], max(preds_scores[k]))
             _result.append(
                 {
                     'keypoints':preds_coords[k],

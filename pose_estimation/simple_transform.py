@@ -15,6 +15,9 @@ def to_torch(ndarray):
 
 
 class SimpleTransform(object):
+    """
+        Source: AlphaPose
+    """
     def __init__(self, input_size):
         self._input_size = input_size
         self._aspect_ratio = float(input_size[1]) / input_size[0]

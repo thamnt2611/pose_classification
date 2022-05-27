@@ -17,7 +17,7 @@ class Detector(metaclass=abc.ABCMeta):
 
     @property
     @abc.abstractmethod
-    def DARKNET_INPUT_SHAPE(self):
+    def INPUT_SHAPE(self):
         pass
 
     @property
@@ -36,13 +36,13 @@ class Detector(metaclass=abc.ABCMeta):
 
 @Detector.register
 class HumanDetector_OpenCV(object):
-    def __init__(self, weight_path, config_path):
+    def __init__(self, weight_path, config_path, labels_path):
         self.net = cv2.dnn.readNetFromDarknet(config_path, weight_path)
         self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
         self.net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
         
-        self.DARKNET_INPUT_SHAPE = (416, 416, 3)
-        self.LABELS = open("./model/coco_labels.txt").read().strip().split("\n")
+        self.INPUT_SHAPE = (416, 416, 3)
+        self.LABELS = open(labels_path).read().strip().split("\n")
         self.INTEREST_CLASSES = [0]
         self.confidence_thres = 0.3
         self.nms_thres = 0.45
@@ -68,7 +68,7 @@ class HumanDetector_OpenCV(object):
         return boxes, confidences, classIDs
     
     def _preprocess_input(self):
-        darknet_image = cv2.dnn.blobFromImage(self.image_buffer, 1/255.0, (self.DARKNET_INPUT_SHAPE[0], self.DARKNET_INPUT_SHAPE[1]), swapRB = True, crop = False)
+        darknet_image = cv2.dnn.blobFromImage(self.image_buffer, 1/255.0, (self.INPUT_SHAPE[0], self.INPUT_SHAPE[1]), swapRB = True, crop = False)
         return darknet_image
     
     def predict(self, image):
@@ -85,9 +85,9 @@ class HumanDetector_OpenCV(object):
 
 @Detector.register
 class HumanDetector_Darknet(object):
-    def __init__(self, weight_path, config_path, custom_transform_matrix=None):
+    def __init__(self, weight_path, config_path, labels_path, custom_transform_matrix=None):
         self.lib = DarknetLib()
-        self.LABELS = open("./model/coco_labels.txt").read().strip().split("\n")
+        self.LABELS = open(labels_path).read().strip().split("\n")
         self._load_network(config_path, weight_path)
         self.thresh = 0.5
         self.hier_thresh = 0.5

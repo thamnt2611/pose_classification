@@ -1,4 +1,7 @@
-# module chứa hàm để kiểm tra một object có phải class/ function ko
+"""
+    Source: AlphaPose
+    module chứa hàm để khởi tạo class từ file config
+"""
 import inspect
 
 
@@ -101,4 +104,3 @@ def retrieve_from_cfg(cfg, registry):
             type(obj_type)))
 
     return obj_cls
-

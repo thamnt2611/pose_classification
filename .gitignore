@@ -1,16 +1,25 @@
 # Ignore
-inputs/
-model/
 pe-venv/
-pose_estimation/
+inputs/
+detection/model/
+detection/__pycache__/
+pose_estimation/configs/
+pose_estimation/datasets/
+pose_estimation/model/
+pose_estimation/pretrained_models/
+pose_estimation/__pycache__/
+classification/data/
+classification/weight/
+classification/__pycache__/
+utils/__pycache__/
+tracking/__pycache__/
 FastPose.jit
 libdarknet.so
 result.json
-classification/data/
-classification/weight/
-
-# Except
-!pose_estimation/pose_estimator.py
-!pose_estimation/simple_transform.py
+NN_Classifier.jit
+pose_data_17.json
+pose_data.json
+track.txt
+yoga_pose_data.json
 
 

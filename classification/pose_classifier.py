@@ -25,6 +25,10 @@ class NN_Model(nn.Module):
     return x
 
 class CocoPoseEncoder(object):
+    """
+        Convert pose in coco format into vector
+        Apply centering and normalization
+    """
     def __init__(self):
         self.NUM_JOINTS = 17
 
@@ -57,11 +61,15 @@ class CocoPoseEncoder(object):
         return keypoints
 
 class PoseClassifier(object):
-    def __init__(self, weight_path, pose_encoder, pose_names, num_keypoints = 17):
-        self.model = NN_Model(num_keypoints, len(pose_names))
-        self.model.load_state_dict(torch.load(weight_path))
+    def __init__(self, weight_path, class_path, pose_encoder, num_keypoints = 17):
+        self.pose_names = self._get_pose_names(class_path)
+        self.model = NN_Model(num_keypoints, len(self.pose_names))
+        self.model.load_state_dict(torch.load(weight_path, map_location=torch.device("cuda:0")))
+        self.model.eval()
+        x = torch.rand((1, 17, 2))
+        traced_model = torch.jit.trace(self.model, x)
+        traced_model.save("./NN_Classifier.jit")
         self.pose_encoder = pose_encoder
-        self.pose_names = pose_names
 
     def predict(self, pose_estimation_result):
         keypoints = pose_estimation_result['keypoints'] # Tensor
@@ -71,6 +79,8 @@ class PoseClassifier(object):
         pred = torch.argmax(pred, dim = 1)
         return self.pose_names[pred]
 
-
-
-
+    def _get_pose_names(self, file_paths):
+        with open(file_paths, "r") as f:
+            pose_names = f.readlines()
+            pose_names = [name.strip() for name in pose_names]
+        return pose_names

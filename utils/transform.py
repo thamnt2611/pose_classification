@@ -9,7 +9,7 @@ def affine_transform(pt, t):
 def perspective_transform(point, trans_matrix):
     new_point = np.ones((2))
     denominator = trans_matrix[2][0] * point[0] + trans_matrix[2][1] * point[1] + trans_matrix[2][2] 
-    print(trans_matrix.shape)
+    # print(trans_matrix.shape)
     new_point[0] = (trans_matrix[0][0] * point[0] + trans_matrix[0][1] * point[1] + trans_matrix[0][2]) / denominator
     new_point[1] = (trans_matrix[1][0] * point[0] + trans_matrix[1][1] * point[1] + trans_matrix[1][2]) / denominator
     return new_point
